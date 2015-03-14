@@ -69,8 +69,6 @@ class Base(object):
 
 
 if __name__ == '__main__':
-    import sys
-    
     base = Base('cache', 30)
     base_1 = Base('cache', 30)
     print('id of base is {0}, id of base_1 is {1}'.format(id(base.client), id(base_1.client)))
