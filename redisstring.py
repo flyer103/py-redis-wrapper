@@ -34,7 +34,7 @@ class RString(Base):
 
     def set(self, value):
         """set the string value of the key"""
-        self.client.set(self._get_name(), value, self.get_default_ttl())
+        return self.client.set(self._get_name(), value, self.get_default_ttl())
 
     def mset(self, dic={}):
         """set multiple keys to multiple values"""
