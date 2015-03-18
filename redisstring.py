@@ -34,8 +34,16 @@ class RString(Base):
 
     def set(self, value):
         """set the string value of the key"""
-        return self.client.set(self._get_name(), value, self.get_default_ttl())
+        default_ttl = self.get_default_ttl()
+        if default_ttl > 0:
+            return self.setex(default_ttl, value)
+        else:
+            return self.client.set(self._get_name(), value)
 
+    def setex(self, seconds, value):
+        """set the value and expiration of a key"""
+        return self.client.setex(self._get_name(), seconds, value)
+        
     def mset(self, dic={}):
         """set multiple keys to multiple values"""
         tmp_dict = {'{0}:{1}'.format(self._get_prefix(), k): v for k, v in dic.items()}
@@ -56,10 +64,7 @@ class RString(Base):
 
     def getset(self, value):
         """set the string value of the key and return its old value"""
-        ret = self.client.getset(self._get_name(), value)
-        self.refresh()
-
-        return ret
+        return self.client.getset(self._get_name(), value)
  
     def incr_by(self, value=1):
         """increment the integer value of the key by the given amount"""
