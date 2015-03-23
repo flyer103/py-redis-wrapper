@@ -33,7 +33,7 @@ class Base(object):
         self.name_ud = name     # user defined name
         self._set_name(name)    # stored name
         self.ttl = ttl
-        self.client = Wrapper(self.host, self.port, self.db, **self.kwargs).client
+        self.client = Wrapper.client(self.host, self.port, self.db, **self.kwargs)
 
     def get_redis_config(self):
         """get the config of redis"""
